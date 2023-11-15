@@ -7,9 +7,6 @@ const {
 
 // const argv = require("yargs").argv;
 
-const yargs = require("yargs");
-const { hideBin } = require("yargs/helpers");
-
 async function invokeAction({ action, id, name, email, phone }) {
   try {
     switch (action) {
@@ -20,6 +17,7 @@ async function invokeAction({ action, id, name, email, phone }) {
 
       case "get":
         const contactById = await getContactById(id);
+        if (!contactById) throw new Error(`Contact with id: ${id} not found!`);
         console.log("Contact by ID:", contactById);
         break;
 
@@ -41,7 +39,14 @@ async function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-const arr = hideBin(process.argv);
-const { argv } = yargs(arr);
-console.log(argv);
-invokeAction(argv);
+// invokeAction(argv);
+
+// invokeAction({ action: "list"});
+// invokeAction({ action: "get", id: "1DEXoP8AuCGYc1YgoQ6hw" });
+// invokeAction({
+//   action: "add",
+//   name: "Hryhorii Kyriienko",
+//   email: "hrhrkrnk@gmail.com",
+//   phone: +380966100113,
+// });
+// invokeAction({ action: "remove", id: "5mL7ZSOjtODk-V2jS5vyb" });
